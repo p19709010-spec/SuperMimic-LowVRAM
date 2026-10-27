@@ -1,0 +1,25 @@
+{
+  "name": "verified_512_900",
+  "status": "verified",
+  "scope": "short_test",
+  "upstream_commit": "a1508d42c9d1699a52e8233ab16d08c488441ab9",
+  "run_name": "lowvram_512_900",
+  "num_envs": 512,
+  "wm_batch": 256,
+  "pi_batch": 512,
+  "horizon": 32,
+  "iterations": 900,
+  "checkpoint_every": 2000,
+  "max_seconds": 600,
+  "require_zero_swap": true,
+  "resource_interval": 1.0,
+  "gpu_free_min_mib": 512,
+  "max_system_swap_growth_mib": 0,
+  "upstream_source_modified": false,
+  "verified_on": "2026-10-27",
+  "evidence": [
+    "logs/local_20261027_vibed_vram_scale01/checkpoint512.json",
+    "logs/local_20261027_vibed_vram_scale01/comparison512.json"
+  ],
+  "limitations": "Verified only as a 900-iteration execution/resource/checkpoint test on one RTX 5060 Ti 8GB; not convergence, tracking quality or a completed formal run."
+}

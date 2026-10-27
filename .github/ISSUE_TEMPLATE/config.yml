@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security or credential exposure
+    url: https://github.com/CuboiLeo/SuperMimic-Reproduced/security
+    about: Do not post live credentials or private data in a public issue.

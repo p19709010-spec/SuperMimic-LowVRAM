@@ -1,0 +1,22 @@
+{
+  "name": "untested_1024_900",
+  "status": "untested",
+  "scope": "capacity_probe",
+  "upstream_commit": "a1508d42c9d1699a52e8233ab16d08c488441ab9",
+  "run_name": "lowvram_1024_900",
+  "num_envs": 1024,
+  "wm_batch": 512,
+  "pi_batch": 1024,
+  "horizon": 32,
+  "iterations": 900,
+  "checkpoint_every": 2000,
+  "max_seconds": 600,
+  "require_zero_swap": true,
+  "resource_interval": 1.0,
+  "gpu_free_min_mib": 512,
+  "max_system_swap_growth_mib": 0,
+  "upstream_source_modified": false,
+  "verified_on": null,
+  "evidence": [],
+  "limitations": "Not run. The 768 profile failed the resource gate, so capacity was not increased to 1024."
+}

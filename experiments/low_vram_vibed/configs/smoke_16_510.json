@@ -1,0 +1,22 @@
+{
+  "name": "smoke_16_510",
+  "status": "untested",
+  "scope": "execution-chain smoke only",
+  "upstream_commit": "a1508d42c9d1699a52e8233ab16d08c488441ab9",
+  "run_name": "lowvram_smoke_16_510",
+  "num_envs": 16,
+  "wm_batch": 32,
+  "pi_batch": 32,
+  "horizon": 32,
+  "iterations": 510,
+  "checkpoint_every": 510,
+  "max_seconds": 900,
+  "require_zero_swap": true,
+  "resource_interval": 1.0,
+  "gpu_free_min_mib": 512,
+  "max_system_swap_growth_mib": 0,
+  "upstream_source_modified": false,
+  "verified_on": null,
+  "evidence": [],
+  "limitations": "Template only. P1 did not launch this short run; it is not convergence evidence."
+}

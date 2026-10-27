@@ -1,0 +1,11 @@
+{
+  "name": "supermimic_vibed",
+  "repository": "https://github.com/zita-ch/supermimic_vibed.git",
+  "commit": "a1508d42c9d1699a52e8233ab16d08c488441ab9",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 ETH Zurich, Chong Zhang",
+  "checkout": "external/supermimic_vibed",
+  "isaaclab_repository": "https://github.com/isaac-sim/IsaacLab.git",
+  "isaaclab_commit": "46d6cc3d7b115906fad12efd372fbf69f4e3d3ed",
+  "integration": "wrapper-only; the checkout must remain unmodified"
+}

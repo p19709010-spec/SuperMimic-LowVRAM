@@ -1,0 +1,69 @@
+name: Bug report
+description: Report a reproducible bug in Track A, Track B, tooling, or documentation.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not include credentials, private host paths, restricted datasets, checkpoints,
+        complete logs, or model weights. Use sanitized excerpts only.
+  - type: dropdown
+    id: track
+    attributes:
+      label: Track
+      options:
+        - Track A — independent mjlab reproduction
+        - Track B — low-VRAM compatibility layer
+        - Tooling / monitoring
+        - Documentation
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit or version
+      placeholder: Full commit SHA or release-candidate identifier
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python, uv, GPU, driver, CUDA, and relevant profile.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include whether a numerical/resource guard stopped the run.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Metric summaries, rule names, traceback excerpts, or reproduction steps.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed credentials, private paths, restricted data, checkpoints, and raw logs.
+          required: true
+        - label: I did not weaken a threshold merely to reproduce or pass the case.
+          required: true

@@ -1,0 +1,46 @@
+name: Feature request
+description: Propose a scoped improvement without merging the two implementation tracks.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: track
+    attributes:
+      label: Target area
+      options:
+        - Track A — independent mjlab reproduction
+        - Track B — low-VRAM compatibility layer
+        - Tooling / monitoring
+        - Documentation / release engineering
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What evidence or workflow is currently missing or unclear?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Explain how the change preserves algorithm and evidence boundaries.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation plan
+      description: What CPU, GPU, provenance, license, or resource checks would be needed?
+    validations:
+      required: true
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints
+      options:
+        - label: The proposal does not require publishing restricted data or assets.
+          required: true
+        - label: The proposal does not silently change paper losses or safety thresholds.
+          required: true

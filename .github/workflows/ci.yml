@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cpu-quality:
+    name: CPU quality and release hygiene
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CUDA_VISIBLE_DEVICES: ""
+      MPLCONFIGDIR: /tmp/supermimic-mpl
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.5"
+          enable-cache: true
+
+      - name: Install locked development environment
+        run: uv sync --frozen --group dev
+
+      - name: Ruff
+        run: uv run --no-sync ruff check .
+
+      - name: CPU tests
+        run: uv run --no-sync pytest -q -rs
+
+      - name: Release file-list audit
+        run: >-
+          uv run --no-sync python scripts/release_audit.py
+          --public-list release/public_files.txt
+          --review-list release/review_files.txt
+          --candidate

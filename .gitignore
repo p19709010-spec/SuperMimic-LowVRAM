@@ -1,0 +1,49 @@
+# Python, packaging and local tooling
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.cache/
+
+# Local experiment state and generated outputs
+/logs/
+/data/
+/external/
+/.local_backups/
+/checkpoints/
+/outputs/
+/runs/
+wandb/
+experiments/**/outputs/
+*.log
+
+# Model, replay and exported artifacts
+*.npz
+*.npy
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+
+# Local credentials and secrets
+.env
+.env.*
+!.env.example
+.aws/
+.agents/
+.codex/
+.ssh/
+*.pem
+*.key
+id_rsa*
+*.p12
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/

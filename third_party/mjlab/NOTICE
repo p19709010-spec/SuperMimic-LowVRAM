@@ -1,0 +1,22 @@
+mjlab
+=====
+
+Source: https://github.com/mujocolab/mjlab
+Pinned revision: 8bb2bc9e187797689ec82c78c35019afd2fd0376
+Version inspected: 1.6.0
+Copyright 2025 The mjlab Developers
+License: Apache License 2.0
+
+The complete Apache-2.0 license text is distributed in this directory as LICENSE.
+
+The CuboiLeo-derived SuperMimic implementation and this derivative reference or
+implement semantics corresponding to mjlab's Apache-2.0 tracking APIs in:
+
+- src/supermimic/data/motion_convert.py
+- src/supermimic/envs/mdp/commands.py
+- src/supermimic/envs/mdp/rewards.py
+- src/supermimic/envs/tracking_env_cfg.py
+
+Those notices were added during the 2026-10-27 P3-A.1 provenance review. This
+attribution does not claim that the files are unmodified mjlab source, nor does it
+claim independent creation of any inherited CuboiLeo implementation.

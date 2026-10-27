@@ -1,0 +1,24 @@
+{
+  "name": "experimental_768_900",
+  "status": "experimental",
+  "scope": "partial_short_test",
+  "upstream_commit": "a1508d42c9d1699a52e8233ab16d08c488441ab9",
+  "run_name": "lowvram_768_900",
+  "num_envs": 768,
+  "wm_batch": 384,
+  "pi_batch": 768,
+  "horizon": 32,
+  "iterations": 900,
+  "checkpoint_every": 2000,
+  "max_seconds": 600,
+  "require_zero_swap": true,
+  "resource_interval": 1.0,
+  "gpu_free_min_mib": 512,
+  "max_system_swap_growth_mib": 0,
+  "upstream_source_modified": false,
+  "verified_on": null,
+  "evidence": [
+    "logs/local_20261027_vibed_vram_scale01/partial768.json"
+  ],
+  "limitations": "Stopped by the resource guard at iteration 570 after 76 KiB whole-system Swap growth; no final checkpoint or complete 900-iteration result exists."
+}
