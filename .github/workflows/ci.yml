@@ -18,6 +18,7 @@ jobs:
     timeout-minutes: 30
     env:
       CUDA_VISIBLE_DEVICES: ""
+      MUJOCO_GL: disable
       MPLCONFIGDIR: /tmp/supermimic-mpl
     steps:
       - name: Check out source
