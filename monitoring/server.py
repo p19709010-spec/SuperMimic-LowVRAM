@@ -14,6 +14,8 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
+from monitoring.demo import read_demo_metadata
+from monitoring.resource_history import read_resource_history
 from monitoring.status import process_identity
 from monitoring.vibed import read_run as read_vibed_run
 
@@ -45,6 +47,14 @@ class Store:
                 return cached[1]
             if (path / "args.json").exists() or (path / "train_log.csv").exists():
                 result = read_vibed_run(path, name)
+                result["resources"] = read_resource_history(path)
+                result["demo"] = read_demo_metadata(
+                    path,
+                    name,
+                    result.get("source", "unknown"),
+                    result["status"],
+                    result.get("checkpoint"),
+                )
                 self.cache[name] = (time.monotonic(), result)
                 return result
             config = read_json(path / "config.json")
@@ -93,6 +103,10 @@ class Store:
                 status["elapsed_s"] = scalars["time/hours"][-1][1] * 3600
             result = dict(name=name, config=config, status=status, checkpoint=checkpoint,
                           scalars=scalars, read_error=error, directory=str(path))
+            result["resources"] = read_resource_history(path)
+            result["demo"] = read_demo_metadata(
+                path, name, "track_a", status, checkpoint
+            )
             self.cache[name] = (time.monotonic(), result)
             return result
 

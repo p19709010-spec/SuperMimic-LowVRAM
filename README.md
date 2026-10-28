@@ -267,6 +267,8 @@ See [docs/REPRODUCTION.md](docs/REPRODUCTION.md) and
   or both are unavailable; the exact count is environment-dependent.
 - Historical RTX 5090 logs/checkpoints and BONES-SEED assets are absent.
 - LAFAN1 G1 retargets are CC BY-NC-ND 4.0 and must not be redistributed with this code.
+- Local robot videos, motion data, G1 assets, and checkpoints remain restricted; see
+  [docs/DEMO_CATALOG.md](docs/DEMO_CATALOG.md).
 - The indirect `torchrunx` dependency advertises GPL-3.0 metadata. It is not vendored;
   do not distribute a bundled virtual environment or binary package without legal review.
 

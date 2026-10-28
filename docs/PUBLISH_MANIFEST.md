@@ -31,8 +31,9 @@ These groups are proposed for the first source-only alpha after owner and licens
 - Track B source under `experiments/low_vram_vibed/`, thin `scripts/vibed_*.py` wrappers,
   and the resource/status helpers under `monitoring/` required by that module.
 - Public documentation: architecture, quick start, reproduction, status, known issues,
-  paper specification, plan, review log, P1/P2 validation, manifest, release checklist,
-  contribution provenance, P3 derivative review, and the real-data SVG resource chart.
+  paper specification, plan, review log, P1/P2 validation, dashboard and demo
+  provenance, the 768 Swap Guard diagnosis, manifest, release checklist, contribution
+  provenance, P3 derivative review, and the real-data SVG resource chart.
 - GitHub automation and community templates under `.github/`.
 - Release auditing files under `release/` and `scripts/release_audit.py`.
 - The Apache-2.0 mjlab license and correspondence notice under `third_party/mjlab/`.
@@ -84,6 +85,7 @@ The following must never enter the public candidate or a release archive:
 - `.aws/`, `.agents/`, `.codex/`, `.ssh/`, `.env*`, private keys, certificates, and any
   credential-bearing file.
 - Complete upstream demo media or any asset whose redistribution rights are unconfirmed.
+- Local robot videos, motion trajectories, robot models, and generated screenshots.
 
 These paths are covered by `.gitignore` and by the release audit's restricted checks.
 `git add .` remains prohibited.

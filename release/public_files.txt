@@ -13,6 +13,7 @@ THIRD_PARTY_NOTICES.md
 docs/ARCHITECTURE.md
 docs/CONTRIBUTION_PROVENANCE.md
 docs/DASHBOARD.md
+docs/DEMO_CATALOG.md
 docs/EXPERIMENTS.md
 docs/KNOWN_ISSUES.md
 docs/P1_VALIDATION.md
@@ -27,6 +28,7 @@ docs/REPRODUCTION.md
 docs/REPRODUCTION_PLAN.md
 docs/REPRODUCTION_STATUS.md
 docs/REVIEW_LOG.md
+docs/SWAP_GUARD_768.md
 docs/assets/low_vram_512_900_resources.svg
 experiments/__init__.py
 experiments/low_vram_vibed/README.md
@@ -44,12 +46,15 @@ experiments/low_vram_vibed/perf.py
 experiments/low_vram_vibed/provenance.py
 experiments/low_vram_vibed/run.py
 experiments/low_vram_vibed/smoke.py
+experiments/low_vram_vibed/tests/test_checkpoint.py
 experiments/low_vram_vibed/tests/test_profiles.py
 experiments/low_vram_vibed/tests/test_wrapper_cli.py
 experiments/low_vram_vibed/upstream.json
 monitoring/__init__.py
+monitoring/demo.py
 monitoring/eta.py
 monitoring/index.html
+monitoring/resource_history.py
 monitoring/resources.py
 monitoring/server.py
 monitoring/status.py

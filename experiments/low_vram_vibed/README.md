@@ -30,7 +30,7 @@ experiments/low_vram_vibed/
   provenance.py                 read-only checkout provenance checks
   fetch_upstream.py             dry-run or fetch the pinned checkout
   run.py                        resource-supervised upstream training wrapper
-  checkpoint.py                 CPU checkpoint finite/count validation
+  checkpoint.py                 CPU format/finite/optimizer-count validation
   finish.py                     serial evaluation/render/plot wrapper
   perf.py                       native CSV throughput comparison
   smoke.py                      no-GPU profile/provenance/import smoke check
@@ -92,6 +92,27 @@ env -u PYTHONPATH uv run --no-sync python experiments/low_vram_vibed/smoke.py --
 
 It validates every profile, verifies the clean pinned upstream checkout, checks that no model/data
 artifacts were added under `experiments/`, and runs a small CPU policy forward pass.
+
+## Checkpoint formats
+
+The pinned upstream writes two schemas:
+
+- `ckpt_<iteration>.pt` is weight-only: `pi`, `wm`, iteration/timing metadata, and no
+  critic or optimizer state.
+- `last.pt` additionally contains `critic`, `opt_wm`, `opt_pi`, and `opt_v`.
+
+The checker reports a valid weight-only file as `format=weight_only` but
+`training_resume_possible=false`. It does not access missing optimizer keys or invent state.
+Even a `last.pt` omits replay, RNG, and simulator state, so exact recovery remains unconfirmed.
+
+```bash
+env -u PYTHONPATH python scripts/vibed_check.py \
+  --checkpoint <run>/ckpt_000900.pt --out /tmp/ckpt_report.json
+
+# Require optimizer state and a resumable-format checkpoint.
+env -u PYTHONPATH python scripts/vibed_check.py \
+  --checkpoint <run>/last.pt --out /tmp/resume_report.json --require-resume
+```
 
 ## Running a profile
 

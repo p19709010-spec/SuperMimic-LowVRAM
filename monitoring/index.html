@@ -4,6 +4,8 @@
 <title>SuperMimic · 本地训练观测台</title>
 <style>
 :root{color-scheme:dark;font-family:Inter,"Noto Sans CJK SC",system-ui,sans-serif;color:#e4eaf0;background:#0c1118;font-size:14px}*{box-sizing:border-box}body{margin:0}header{padding:23px 4vw;border-bottom:1px solid #26313c;display:flex;align-items:center;justify-content:space-between;background:#101722}.brand{font-size:21px;font-weight:700;letter-spacing:-.5px}.brand span{color:#7ae1c4}.muted,small{color:#91a2b3}main{max-width:1550px;padding:26px 4vw;margin:auto}.toolbar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:22px}.toolbar label{display:flex;gap:10px;align-items:center}select,button{font:inherit;color:inherit;background:#172331;border:1px solid #344354;padding:9px 12px;border-radius:7px}select{max-width:330px}.badge{display:inline-flex;align-items:center;gap:7px;border:1px solid #344354;border-radius:20px;padding:5px 12px;color:#b7c8d8}.badge.running{color:#7ae1c4;border-color:#32735f}.badge.error{color:#ff9a9a;border-color:#843a46}.badge.completed{color:#90baff}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,1fr)}.card{background:#121c27;border:1px solid #263441;border-radius:11px;padding:19px}.label{font-size:12px;color:#91a2b3;letter-spacing:.4px}.value{font-size:29px;font-weight:600;margin:10px 0 6px;letter-spacing:-.6px}.value.compact{font-size:20px;line-height:1.7}.progress{height:7px;border-radius:8px;background:#25313f;overflow:hidden;margin-top:15px}.progress i{height:100%;display:block;background:#7ae1c4;width:0;transition:width .6s}.detail{display:flex;justify-content:space-between;gap:14px;align-items:center}.charts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:18px}.chart-title{font-size:14px;font-weight:600;margin:0}.chart-sub{font-size:11px;color:#91a2b3;margin:7px 0 3px;min-height:17px}.chart{height:195px;position:relative}.chart svg{width:100%;height:100%;overflow:visible}.empty{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#718699;font-size:13px;gap:10px}.tooltip{position:absolute;display:none;padding:6px 10px;background:#202e3e;border:1px solid #52677b;border-radius:5px;font-size:12px;pointer-events:none;z-index:1;white-space:pre}.wide{margin-top:18px}.sectiontitle{font-size:16px;font-weight:600;margin:0 0 17px}table{width:100%;border-collapse:collapse;text-align:left}th,td{padding:10px 12px;border-bottom:1px solid #263441;font-size:12px;overflow-wrap:anywhere}th{color:#91a2b3;font-weight:500}code{color:#a2b8cb;font-family:ui-monospace,monospace;font-size:12px;overflow-wrap:anywhere}.notice{padding:12px 16px;border:1px solid #7b4b3e;background:#30221f;color:#ffc5ae;border-radius:8px;margin:15px 0;white-space:pre-wrap}.checkpoint{display:grid;grid-template-columns:1fr 1fr;gap:14px}.legend{display:flex;gap:14px;margin-top:8px;font-size:11px;color:#91a2b3}.dot{display:inline-block;width:8px;height:8px;background:#7ae1c4;border-radius:50%;margin-right:6px}footer{text-align:center;padding:25px;color:#718699;font-size:12px}@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.charts{grid-template-columns:1fr}header{gap:15px;flex-wrap:wrap}.checkpoint{grid-template-columns:1fr}select{max-width:240px}}@media(max-width:480px){.stats{grid-template-columns:1fr}main{padding:18px}.toolbar label{width:100%;justify-content:space-between}.value{font-size:25px}}
+.section-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}.event{color:#ffb09d;border-color:#5d3a36}.event-table{margin-top:16px}.demo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.demo-grid .metric{background:#0f1822;border:1px solid #253441;border-radius:8px;padding:13px}.demo-grid .metric strong{display:block;margin-top:7px;font-size:15px;line-height:1.45}.mini-list{margin:8px 0 0;padding-left:19px;color:#c0ceda;line-height:1.65}.warning-card{border-color:#65463e;background:#241a1a}.ok{color:#7ae1c4}.risk{color:#ffb09d}@media(max-width:900px){.demo-grid{grid-template-columns:1fr}}
+#resource-events{min-width:900px}#resource-compare{min-width:640px}
 </style>
 <header><div class="brand">SuperMimic <span> / </span> 本地训练观测台</div><div class="muted"><span style="color:#7ae1c4">●</span> 本机只读监控 · <span id="refresh">等待连接</span></div></header>
 <main>
@@ -21,10 +23,12 @@
 <div class="card"><div class="label" id="finish-label">预计训练完成时刻</div><div class="value compact" id="train-finish">—</div><small>柏林时间 · <span id="postprocess-eta">评测时间待估</span></small></div>
 <div class="card"><div class="label">预计先触发的停止条件</div><div class="value compact" id="finish-condition">待估算</div><small id="eta-conditions">按迭代目标与训练时间上限比较</small></div>
 </div>
-<div class="legend"><span><i class="dot"></i>当前实验</span><span><i class="dot" style="background:#9ca8ff"></i>对比实验（虚线）</span><span>曲线横轴：迭代 / 更新步 · 移入曲线查看真实采样值</span></div>
+<div class="legend"><span><i class="dot"></i>当前实验</span><span><i class="dot" style="background:#9ca8ff"></i>对比实验（虚线）</span><span>训练曲线横轴：迭代 / 更新步 · 移入曲线查看真实采样值</span></div>
+<section class="wide" id="resource-section"><div class="section-tools"><div><h2 class="sectiontitle">资源历史与保护触发</h2><p class="muted" id="resource-source">等待 resources.csv</p></div><span id="resource-badge" class="badge event">无资源采样</span></div><div id="resource-charts" class="grid charts"></div><div class="card wide event-table"><h3 class="chart-title">资源保护触发点</h3><p class="chart-sub">根据 launch.json 的真实阈值和逐次采样推导；红线表示首次越界，不是推测训练收敛。</p><div style="overflow:auto"><table id="resource-events"><thead><tr><th>Run</th><th>相对时间</th><th>保护项</th><th>实测</th><th>阈值</th><th>说明</th></tr></thead><tbody></tbody></table></div></div><div class="card wide event-table"><h3 class="chart-title">资源 Run 对比</h3><p class="chart-sub">峰值来自实际 resources.csv；整机 Swap 包含其他进程，不能归因于训练。</p><div style="overflow:auto"><table id="resource-compare"><thead><tr><th>指标</th><th>当前 Run</th><th>对比 Run</th></tr></thead><tbody></tbody></table></div></div></section>
 <div id="charts" class="grid charts"></div>
 <section class="card wide"><h2 class="sectiontitle">实验配置</h2><div style="overflow:auto"><table id="config"><thead><tr><th>参数</th><th>当前实验</th><th>对比实验</th></tr></thead><tbody></tbody></table></div><p class="muted" id="obs"></p></section>
 <section class="card wide"><h2 class="sectiontitle">最近保存的 Checkpoint</h2><div class="checkpoint"><div><div class="label">文件名 / 迭代</div><p id="ckpt-name">等待保存</p><div class="label">保存时间</div><p id="ckpt-time">—</p></div><div><div class="label">完整保存路径</div><p><code id="ckpt-path">—</code></p><div class="label">训练日志位置</div><p><code id="tb-path">—</code></p></div></div></section>
+<section class="card wide"><div class="section-tools"><h2 class="sectiontitle">Demo 来源、性能与公开授权</h2><span id="demo-publication" class="badge event">LOCAL_ONLY</span></div><div id="demo-content" class="demo-grid"><div class="muted">等待 run 元数据</div></div></section>
 </main><footer>读取真实 CSV / TensorBoard 日志 · 不运行模型、不占用训练显存 · 时间预算进度不代表模型收敛度</footer>
 <script>
 const $=id=>document.getElementById(id);let busy=false,initialized=false;
@@ -38,6 +42,11 @@ const charts=[
  ['Simulation vs Imagination Reward',['train/episode_norm_return','policy/imag_reward_mean'],'仿真回合回报 vs 想象每步奖励 / 0.1；采样分布不同'],
  ['World Model 1-step Error',['wm/validation_nse_1step','wm/online_nse_1step','wm/nse_1step'],'误差归一化沿用仓库 StateSpec 定义']];
 charts.forEach(([title,,sub],i)=>{let el=document.createElement('article');el.className='card';el.innerHTML=`<div class="detail"><h2 class="chart-title">${title}</h2><span id="last-${i}" style="color:#7ae1c4;font-size:13px"></span></div><p class="chart-sub" id="sub-${i}">${sub}</p><div class="chart" id="chart-${i}"></div>`;$('charts').append(el)});
+const resourceCharts=[
+ {title:'GPU 显存历史',sub:'整卡 nvidia-smi 采样；包含其他 GPU 使用者',metrics:['gpu_used_mib'],fields:[['gpu_used_mib','GPU 已用显存','#8aaeff']]},
+ {title:'RAM 历史',sub:'训练 cgroup、进程树 RSS 与主机可用 RAM',metrics:['cgroup_kernel_peak_gib','host_available_gib'],fields:[['cgroup_ram_gib','cgroup RAM','#7ae1c4'],['tree_rss_gib','进程树 RSS','#9ca8ff'],['host_available_gib','主机可用 RAM','#ffbd80']],compareFields:[['cgroup_ram_gib','cgroup RAM','#7ae1c4'],['tree_rss_gib','进程树 RSS','#9ca8ff']]},
+ {title:'Swap 历史',sub:'训练 cgroup / 进程树 Swap 与整机 Swap 增量',metrics:['cgroup_swap_mib','system_swap_growth_mib'],fields:[['cgroup_swap_mib','cgroup Swap','#7ae1c4'],['tree_swap_mib','进程树 Swap','#9ca8ff'],['system_swap_used_mib','整机 Swap 已用','#ffbd80'],['system_swap_growth_mib','整机 Swap 增长','#ff7d7d']],compareFields:[['system_swap_growth_mib','整机 Swap 增长','#ff7d7d']]}];
+resourceCharts.forEach((chart,i)=>{let el=document.createElement('article');el.className='card';el.innerHTML=`<div class="detail"><h2 class="chart-title">${chart.title}</h2><span id="resource-last-${i}" style="color:#7ae1c4;font-size:13px"></span></div><p class="chart-sub">${chart.sub}</p><div class="chart" id="resource-chart-${i}"></div>`;$('resource-charts').append(el)});
 const states={running:'运行中',paused:'暂停',completed:'完成',error:'异常',unknown:'已停止 / 状态未记录'};
 const stages={initializing:'初始化',data_collection:'数据采集',world_model:'World Model',policy_bptt:'Policy BPTT',evaluation:'评测',finished:'已结束',wm:'World Model',sim:'仿真验证',policy:'Policy BPTT'};
 function num(x,d=3){return x==null||!Number.isFinite(x)?'—':Math.abs(x)<.001&&x!==0?x.toExponential(2):x.toLocaleString('zh-CN',{maximumFractionDigits:d})}
@@ -45,6 +54,74 @@ function duration(s){if(s==null)return '—';s=Math.max(0,Math.floor(s));return 
 function at(obj,path){return path.split('.').reduce((v,k)=>v?.[k],obj)}
 function curve(run,tag){let values=run?.scalars?.[tag];if(values?.length)return values;if(tag==='policy/actor_loss'){let j=run?.scalars?.['policy/imag_objective'],h=run?.config?.policy_trainer?.horizon;if(j?.length&&h)return j.map(([s,v,t])=>[s,v==null?null:-v/h,t])}return []}
 function plot(i,series){let el=$('chart-'+i);el.replaceChildren();let all=series.flatMap(s=>s.values.filter(v=>v[1]!=null));if(!all.length){el.innerHTML='<div class="empty"><span>暂无真实指标</span><small>等待训练日志写入此项记录</small></div>';$('last-'+i).textContent='';return}let xs=all.map(p=>p[0]),ys=all.map(p=>p[1]);let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);if(maxX===minX)maxX++;let pad=(maxY-minY)*.12||Math.abs(maxY)*.1||.01;minY-=pad;maxY+=pad;let w=620,h=190,L=55,R=12,T=12,B=27,fx=x=>L+(x-minX)/(maxX-minX)*(w-L-R),fy=y=>h-B-(y-minY)/(maxY-minY)*(h-B-T);let svg='<svg viewBox="0 0 620 190" role="img" aria-label="真实训练指标曲线">';for(let k=0;k<4;k++){let y=minY+(maxY-minY)*k/3;svg+=`<line x1="${L}" y1="${fy(y)}" x2="${w-R}" y2="${fy(y)}" stroke="#263441"/><text x="${L-7}" y="${fy(y)+4}" text-anchor="end" fill="#718699" font-size="10">${num(y,3)}</text>`}for(let k=0;k<4;k++){let x=minX+(maxX-minX)*k/3;svg+=`<text x="${fx(x)}" y="${h-4}" text-anchor="middle" fill="#718699" font-size="10">${num(x,0)}</text>`}series.forEach((s,j)=>{let pts=s.values.filter(v=>v[1]!=null);if(!pts.length)return;let color=s.color||'#7ae1c4';svg+=`<path d="${pts.map((p,k)=>(k?'L':'M')+fx(p[0])+','+fy(p[1])).join(' ')}" fill="none" stroke="${color}" stroke-width="2" ${s.dash?'stroke-dasharray="5 4"':''}/>`;if(pts.length===1)svg+=`<circle cx="${fx(pts[0][0])}" cy="${fy(pts[0][1])}" r="3" fill="${color}"/>`});svg+='</svg><div class="tooltip"></div>';el.innerHTML=svg;let tip=el.querySelector('.tooltip');el.onpointermove=e=>{let box=el.getBoundingClientRect(),x=minX+((e.clientX-box.left)/box.width*w-L)/(w-L-R)*(maxX-minX);tip.textContent=series.filter(s=>s.values.length).map(s=>{let p=s.values.reduce((a,b)=>Math.abs(b[0]-x)<Math.abs(a[0]-x)?b:a);return `${s.name} · ${p[0]}: ${num(p[1],6)}`}).join('\n');tip.style.display='block';tip.style.left=Math.min(e.clientX-box.left+8,Math.max(0,box.width-235))+'px';tip.style.top='15px'};el.onpointerleave=()=>tip.style.display='none';let last=series[0]?.values?.at(-1);$('last-'+i).textContent=last?num(last[1],5):''}
+function shortDuration(s){if(s==null)return '—';if(s<60)return num(s,1)+'s';if(s<3600)return num(s/60,1)+'m';return num(s/3600,2)+'h'}
+function esc(value){return String(value??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function resourceSeries(run,fields,dash=false){let samples=run?.resources?.samples||[];return fields.map(([key,name,color])=>({name:(dash?'对比 · ':'')+name,color,dash,values:samples.map(sample=>[sample.relative_s,sample[key]])}))}
+function plotResource(i,series,events){
+ let el=$('resource-chart-'+i);el.replaceChildren();
+ let all=series.flatMap(s=>s.values.filter(v=>v[0]!=null&&v[1]!=null));
+ if(!all.length){el.innerHTML='<div class="empty"><span>暂无真实资源采样</span><small>该 Run 没有 resources.csv</small></div>';$('resource-last-'+i).textContent='';return}
+ let xs=all.map(p=>p[0]),ys=all.map(p=>p[1]);
+ let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+ if(maxX===minX)maxX=minX+1;
+ let pad=(maxY-minY)*.12||Math.abs(maxY)*.08||.1;minY-=pad;maxY+=pad;
+ let w=620,h=190,L=58,R=12,T=12,B=27,fx=x=>L+(x-minX)/(maxX-minX)*(w-L-R),fy=y=>h-B-(y-minY)/(maxY-minY)*(h-B-T);
+ let svg='<svg viewBox="0 0 620 190" role="img" aria-label="真实资源历史曲线">';
+ for(let k=0;k<4;k++){let y=minY+(maxY-minY)*k/3;svg+=`<line x1="${L}" y1="${fy(y)}" x2="${w-R}" y2="${fy(y)}" stroke="#263441"/><text x="${L-7}" y="${fy(y)+4}" text-anchor="end" fill="#718699" font-size="10">${num(y,3)}</text>`}
+ for(let k=0;k<4;k++){let x=minX+(maxX-minX)*k/3;svg+=`<text x="${fx(x)}" y="${h-4}" text-anchor="middle" fill="#718699" font-size="10">${shortDuration(x)}</text>`}
+ events.forEach(event=>{if(event.relative_s==null||event.relative_s<minX||event.relative_s>maxX)return;let x=fx(event.relative_s),color=event.color||'#ff7d7d';svg+=`<line x1="${x}" y1="${T}" x2="${x}" y2="${h-B}" stroke="${color}" stroke-width="1.5" stroke-dasharray="3 3"><title>${esc(event.reason)}</title></line><circle cx="${x}" cy="${fy(event.value)}" r="4" fill="${color}"/>`});
+ series.forEach(s=>{let pts=s.values.filter(v=>v[0]!=null&&v[1]!=null);if(!pts.length)return;svg+=`<path d="${pts.map((p,k)=>(k?'L':'M')+fx(p[0])+','+fy(p[1])).join(' ')}" fill="none" stroke="${s.color}" stroke-width="2" ${s.dash?'stroke-dasharray="5 4"':''}/>`;if(pts.length===1)svg+=`<circle cx="${fx(pts[0][0])}" cy="${fy(pts[0][1])}" r="3" fill="${s.color}"/>`});
+ svg+='</svg><div class="tooltip"></div>';el.innerHTML=svg;
+ let tip=el.querySelector('.tooltip');
+ el.onpointermove=e=>{let box=el.getBoundingClientRect(),x=minX+((e.clientX-box.left)/box.width*w-L)/(w-L-R)*(maxX-minX);let closest=series.filter(s=>s.values.some(v=>v[1]!=null)).map(s=>{let values=s.values.filter(v=>v[1]!=null);let p=values.reduce((a,b)=>Math.abs(b[0]-x)<Math.abs(a[0]-x)?b:a);return `${s.name} · ${shortDuration(p[0])}: ${num(p[1],6)}`});let event=events.reduce((best,item)=>best==null||Math.abs(item.relative_s-x)<Math.abs(best.relative_s-x)?item:best,null);tip.textContent=closest.join('\n')+(event&&Math.abs(event.relative_s-x)<maxX*.04?'\n保护触发 · '+event.reason:'');tip.style.display='block';tip.style.left=Math.min(e.clientX-box.left+8,Math.max(0,box.width-255))+'px';tip.style.top='15px'};
+ el.onpointerleave=()=>tip.style.display='none';
+ let last=series[0]?.values?.filter(v=>v[1]!=null).at(-1);$('resource-last-'+i).textContent=last?num(last[1],5):'';
+}
+function renderResources(run,compare){
+ let resources=run?.resources||{},samples=resources.samples||[],summary=resources.summary||{},events=resources.events||[];
+ let allEvents=[...events.map(event=>({...event,run:run?.name,color:'#ff7d7d'})),...(compare?.resources?.events||[]).map(event=>({...event,run:compare?.name,color:'#ffbd80'}))];
+ $('resource-source').textContent=resources.available?`${resources.source} · ${summary.samples} 个真实样本 · 中位采样间隔 ${num(resources.sample_interval_s,2)}s`:'该 Run 没有 resources.csv；不生成示例曲线';
+ $('resource-badge').textContent=allEvents.length?`${allEvents.length} 项保护阈值越界`:(resources.available?'未检测到保护越界':'无资源采样');
+ $('resource-badge').className='badge '+(allEvents.length?'event':'completed');
+ resourceCharts.forEach((chart,i)=>{let series=resourceSeries(run,chart.fields);if(compare)series.push(...resourceSeries(compare,chart.compareFields||chart.fields,true));let chartEvents=allEvents.filter(event=>chart.metrics.includes(event.metric));plotResource(i,series,chartEvents)});
+ let eventsBody=$('resource-events').querySelector('tbody');eventsBody.replaceChildren();
+ if(!allEvents.length){let row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=6;cell.textContent=resources.available?'当前 / 对比 Run 未检测到阈值越界。':'当前 Run 无 resources.csv。';row.append(cell);eventsBody.append(row)}
+ for(let event of allEvents){let row=document.createElement('tr');for(let value of [event.run,shortDuration(event.relative_s),event.label,`${num(event.value,6)} ${event.unit}`,`${num(event.limit,6)} ${event.unit}`,event.reason]){let cell=document.createElement('td');cell.textContent=value??'—';row.append(cell)}eventsBody.append(row)}
+ let rows=[
+  ['采样数',summary.samples,compare?.resources?.summary?.samples],
+  ['采样时长',shortDuration(summary.duration_s),shortDuration(compare?.resources?.summary?.duration_s)],
+  ['GPU 采样峰值',summary.gpu_peak_mib==null?'—':num(summary.gpu_peak_mib,1)+' MiB',compare?.resources?.summary?.gpu_peak_mib==null?'—':num(compare.resources.summary.gpu_peak_mib,1)+' MiB'],
+  ['cgroup RAM 峰值',summary.cgroup_ram_peak_gib==null?'—':num(summary.cgroup_ram_peak_gib,3)+' GiB',compare?.resources?.summary?.cgroup_ram_peak_gib==null?'—':num(compare.resources.summary.cgroup_ram_peak_gib,3)+' GiB'],
+  ['cgroup Swap 峰值',summary.cgroup_swap_peak_mib==null?'—':num(summary.cgroup_swap_peak_mib,3)+' MiB',compare?.resources?.summary?.cgroup_swap_peak_mib==null?'—':num(compare.resources.summary.cgroup_swap_peak_mib,3)+' MiB'],
+  ['进程树 Swap 峰值',summary.tree_swap_peak_mib==null?'—':num(summary.tree_swap_peak_mib,3)+' MiB',compare?.resources?.summary?.tree_swap_peak_mib==null?'—':num(compare.resources.summary.tree_swap_peak_mib,3)+' MiB'],
+  ['整机 Swap 增长峰值',summary.system_swap_growth_peak_mib==null?'—':num(summary.system_swap_growth_peak_mib,4)+' MiB',compare?.resources?.summary?.system_swap_growth_peak_mib==null?'—':num(compare.resources.summary.system_swap_growth_peak_mib,4)+' MiB'],
+  ['停止原因',summary.stop_reason||'无资源停止记录',compare?.resources?.summary?.stop_reason||'无资源停止记录']];
+ let compareBody=$('resource-compare').querySelector('tbody');compareBody.replaceChildren();
+ for(let values of rows){let row=document.createElement('tr');for(let value of values){let cell=document.createElement('td');cell.textContent=value??'—';row.append(cell)}compareBody.append(row)}
+}
+function renderDemo(run){
+ let demo=run?.demo;if(!demo){$('demo-content').textContent='等待 Run 元数据';return}
+ let metric=demo.metrics||{},metrics=[];
+ if(metric.normalized_return!=null){metrics.push(`归一化回报 ${num(Number(metric.normalized_return),6)}`);metrics.push(`失败 ${metric.failed_clips}/${metric.total_clips}`)}
+ let artifacts=(demo.artifacts||[]).map(item=>item.name).join('、')||'未找到评测视频或轨迹文件';
+ let items=[
+  ['来源',`${demo.track} · ${demo.source}`],
+  ['Checkpoint iteration',demo.checkpoint_iteration??'未保存或未记录'],
+  ['训练 iteration',demo.training_iteration??'未记录'],
+  ['数据',demo.dataset],
+  ['模型',demo.model],
+  ['运行模式',demo.run_mode],
+  ['真实性能',metrics.join(' · ')||'未找到 40 动作评测记录'],
+  ['完成状态',demo.target_reached===true?'达到项目配置目标':demo.target_reached===false?'评测完成但未达到目标质量':'目标状态未记录'],
+  ['演示证据',artifacts],
+  ['未完成 / 限制',(demo.incomplete||[]).join('；')]
+ ];
+ let html=items.map(([label,value])=>`<div class="metric"><span class="label">${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('');
+ html+=`<div class="metric warning-card" style="grid-column:1/-1"><span class="label">公开授权边界</span><ul class="mini-list">${(demo.rights||[]).map(item=>`<li><strong>${esc(item.asset)}</strong>：${esc(item.status)}</li>`).join('')}</ul></div>`;
+ $('demo-content').innerHTML=html;
+ $('demo-publication').textContent=demo.publication?.status||'LOCAL_ONLY';
+ $('demo-publication').className='badge '+(demo.publication?.status==='LOCAL_ONLY'?'event':'completed');
+}
 function clockTime(t){return t==null?'—':new Date(t*1000).toLocaleString('zh-CN',{timeZone:'Europe/Berlin',hour12:false})}
 function renderTrainingProgress(run){
  const s=run?.status||{},p=run?.progress;
@@ -74,7 +151,7 @@ function renderTrainingProgress(run){
  }
  $('notice').hidden=!(s.error||run?.read_error);$('notice').textContent=s.error||run?.read_error||'';
 }
-function render(run,compare){renderTrainingProgress(run);
+function render(run,compare){renderTrainingProgress(run);renderResources(run,compare);renderDemo(run);
 charts.forEach(([,tags,sub],i)=>{let tag=tags.find(t=>curve(run,t).length)||tags[0],series=[];if(i===6){let rewardTags=run?.source==='vibed'?['train/step_norm_reward','policy/imag_reward_mean']:tags;series=rewardTags.map((t,j)=>({name:j?'想象每步奖励 / 0.1':run?.source==='vibed'?'仿真每步奖励 / 0.1':'仿真回合归一化回报',color:j?'#ffbd80':'#7ae1c4',values:curve(run,t).map(([x,y,z])=>[x,y==null?null:y*(j?10:1),z])}))}else{series=[{name:tag,values:curve(run,tag)}];if(compare)series.push({name:'对比 '+tag,values:curve(compare,tag),color:'#9ca8ff',dash:true})}$('sub-'+i).textContent=(run?.metric_notes?.[tag]||(i===6&&run?.source==='vibed'?'上游每步归一化奖励；仿真与想象采样分布不同':sub))+(curve(run,tag).length?' · '+tag:'');plot(i,series)});
 let params=[['实验','name'],['并行环境','env.num_envs'],['WM batch size','wm_trainer.batch_size'],['Policy batch size','policy_trainer.batch_size'],['BPTT horizon','policy_trainer.horizon'],['WM 窗口 k','wm_trainer.window'],['WM 每次更新批数','wm_trainer.batches_per_update'],['Critic epochs / minibatches','critic_steps'],['WM 网络','world_model.hidden'],['Actor 编码器','policy.encoder_hidden'],['锚点相对观测','env.anchor_obs'],['UTD','schedule.updates_per_env_step'],['总迭代上限','schedule.total_iterations']];let tbody=$('config').querySelector('tbody');tbody.replaceChildren();for(let [label,key]of params){let row=document.createElement('tr');for(let v of [label,...[run,compare].map(r=>key==='name'?r?.name:key==='critic_steps'&&r?`${r.config?.policy_trainer?.critic_epochs} / ${r.config?.policy_trainer?.critic_minibatches}`:at(r?.config,key))]){let cell=document.createElement('td');cell.textContent=v==null?'—':Array.isArray(v)?v.join(' → '):typeof v==='boolean'?(v?'开启（修改观测实验）':'关闭'):String(v);row.append(cell)}tbody.append(row)}$('obs').textContent=run?.config?.observation_note||(run?.config?.env?.anchor_obs?'修改观测实验：包含锚点相对位姿，不能当作严格论文观测复现。':'观测配置按 run 原始记录展示；进度百分比不代表跟踪性能或收敛度。');let ck=run?.checkpoint;$('ckpt-name').textContent=ck?`${ck.name} · 迭代 ${ck.iteration??'未记录'}`:'尚无 checkpoint';$('ckpt-time').textContent=ck?new Date(ck.saved_at*1000).toLocaleString('zh-CN'):'—';$('ckpt-path').textContent=ck?.path||'—';$('tb-path').textContent=run?.log_path||(run?run.directory+'/tb':'—')}
 function gpu(g){$('gpu-name').textContent=g.available?g.name:'GPU · 采样不可用';$('gpu-memory').textContent=g.available?`${num(g.used_mib/1024,2)} / ${num(g.total_mib/1024,2)} GiB`:'—';$('gpu-free').textContent=g.available?'可用显存 '+num(g.free_mib/1024,2)+' GiB':g.error;$('gpu-bar').style.width=g.available?(g.used_mib/g.total_mib*100)+'%':'0%';$('gpu-util').textContent=g.available?g.utilization+'% / '+g.temperature+'°C':'—';$('gpu-temp').textContent=g.available?'最近采样 '+new Date(g.sampled_at*1000).toLocaleTimeString('zh-CN'):'等待 nvidia-smi 恢复'}

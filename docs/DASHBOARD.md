@@ -15,6 +15,11 @@ env -u PYTHONPATH UV_CACHE_DIR=/tmp/supermimic-uv \
 ## 使用
 
 - 顶部选择当前或历史 run，可选择另一 run 叠加同名曲线并比较配置。
+- 训练曲线上方显示 `resources.csv` 的三组真实历史：GPU 显存、RAM（cgroup / 进程树 /
+  主机可用）和 Swap（cgroup / 进程树 / 整机）。对比 run 以虚线叠加，资源摘要表同时列出
+  峰值和停止原因。
+- 红色横坐标标记来自 `launch.json` 阈值与逐样本数值的首次越界；表格保留实测值、阈值和
+  Run。整机 Swap 与训练 cgroup Swap 分开呈现，默认不把主机活动归因于训练。
 - 页面每 5 秒刷新，GPU 每 3 秒采样。鼠标移入曲线可查看真实样本的步数和数值；没有指标则显示等待，不生成示例数据。
 - 原训练日志位于 `logs/<run>/tb`。Dashboard 直接使用 TensorBoard EventAccumulator；可另外启动原生 TensorBoard 深入分析同一目录。
 - 每条曲线标明实际 tag。独立验证误差优先显示；没有时显示原 `online_nse`，其来自 replay 采样，不称为独立验证。
@@ -23,6 +28,9 @@ env -u PYTHONPATH UV_CACHE_DIR=/tmp/supermimic-uv \
 - 没有时间预算时，已知迭代上限才显示迭代百分比；旧 run 无生命周期信息时，仅显示最后日志步数和“状态未记录”，不推测正在运行。
 - GPU 卡片读取 `nvidia-smi` 的当前全卡显存、空闲显存、利用率和温度，反映所有本机 GPU 使用者，不等于选中历史 run 的训练资源。
 - checkpoint 只读取文件名、mtime 和训练侧写出的迭代元数据；旧 `ckpt_latest.pt` 无迭代记录时显示“未记录”，不把当前训练步数冒充保存步数。
+- Demo 面板从 `args.json`、`eval.csv`、`post/result.json` 和实际文件名生成，显示 Track
+  A/B、真实 checkpoint iteration、数据/模型/模式、40 动作指标、未完成项和公开授权。
+  详细边界见 [DEMO_CATALOG.md](DEMO_CATALOG.md)；面板不复制或嵌入受限媒体。
 
 ## 让新训练显示精确状态与阶段
 
@@ -44,6 +52,8 @@ env -u PYTHONPATH UV_CACHE_DIR=/tmp/supermimic-uv \
 
 - `monitoring/server.py`：只读 HTTP API、TensorBoard 缓存及 GPU 采样。
 - `monitoring/index.html`：无外部 CDN 的响应式界面与 SVG 曲线。
+- `monitoring/resource_history.py`：只读解析资源 CSV，识别真实阈值越界点。
+- `monitoring/demo.py`：从 run 元数据汇总 Demo 来源、指标和授权边界。
 - `monitoring/status.py`：训练生命周期与 checkpoint 元信息。
 - `scripts/monitored_train.py`：独立训练包装入口。
 - `tests/test_dashboard.py`：真实 TensorBoard event 读入、空日志、进程消失和目录访问边界。
